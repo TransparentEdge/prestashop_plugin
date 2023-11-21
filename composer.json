@@ -1,0 +1,33 @@
+{
+  "name": "transparent/transparentedge",
+  "description": "TransparentEdge CDN Module for PrestaShop",
+  "keywords": [
+    "PrestaShop",
+    "CDN",
+    "Content Delivery Network"
+  ],
+  "require": {
+    "php": ">=7.4.0"
+  },
+  "config": {
+    "preferred-install": "dist",
+    "prepend-autoloader": false
+  },
+  "type": "prestashop-module",
+  "license": "MIT",
+  "authors": [
+  {
+    "name": "Desarrollo Transparent",
+    "email": "desarrollo@transparentedge.eu",
+    "role": "Developer",
+    "homepage": "https://www.transparentedge.eu"	
+  }],
+  "autoload": {
+    "psr-4": {
+      "Transparent\\TransparentEdge\\": "src/"
+    },
+    "classmap": [
+    ],
+    "exclude-from-classmap": []
+  }
+}

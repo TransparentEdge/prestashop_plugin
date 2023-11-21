@@ -1,0 +1,12 @@
+services:
+  _defaults:
+    public: true
+
+  transparent.transparentedge.common.purge_cache:
+    class: Transparent\TransparentEdge\PurgeCache
+    arguments:
+      - '@transparent.transparentedge.common.api'
+
+  transparent.transparentedge.common.api:
+    class: Transparent\TransparentEdge\TransparentApi
+    arguments: ['@prestashop.adapter.legacy.configuration', '@service_container', '@logger']
