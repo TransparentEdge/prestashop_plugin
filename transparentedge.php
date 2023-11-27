@@ -38,7 +38,7 @@ class Transparentedge extends Module
     {
 		$this->name = 'transparentedge';
         $this->tab = 'administration';
-        $this->version = '1.0.0';
+        $this->version = '1.0.1';
         $this->author = 'Desarrollo Transparent';
         $this->need_instance = 0;
         $this->ps_versions_compliancy = [
@@ -80,7 +80,8 @@ class Transparentedge extends Module
 			!$this->registerHook('actionCategoryUpdate') ||
 			!$this->registerHook('actionObjectUpdateAfter') ||
 			!$this->registerHook('actionDispatcherAfter') ||
-			!$this->registerHook('actionObjectProductUpdateAfter')
+			!$this->registerHook('actionObjectProductUpdateAfter') ||
+			!$this->registerHook('actionAdminLoginControllerLoginAfter')
 			){
             return false;
         }
@@ -90,6 +91,17 @@ class Transparentedge extends Module
 	public function uninstall()
 	{
 		return parent::uninstall();
+
+		// OLIVERCG: Added deletion of global variables if the module is uninstalled
+        if (Configuration::get(self::CONFIG_COMPANY_ID)) {
+            Configuration::deleteByName(self::CONFIG_COMPANY_ID);
+        }
+        if (Configuration::get(self::CONFIG_CLIENT_KEY)) {
+            Configuration::deleteByName(self::CONFIG_CLIENT_KEY);
+        }
+        if (Configuration::get(self::CONFIG_SECRET_KEY)) {
+            Configuration::deleteByName(self::CONFIG_SECRET_KEY);
+        }
 	}
 
 	public function getContent()
@@ -261,6 +273,21 @@ class Transparentedge extends Module
 		$urls[] = $link->getManufacturerLink($params['object']->id_manufacturer);			
 		$this->getContainer()->get('session')->getFlashBag()->set(self::FLASHBAG_NAME, array_unique($urls));
 	}
+
+	/**
+	 * This hook executes code after login process in the case it's successful
+	 * @param  Array $params Params like 'controller' => $this, 'employee' => $this->context->employee, 'redirect' => $url
+	 * @author Oliver CG
+	 */
+    public function hookActionAdminLoginControllerLoginAfter($params)
+    {
+    	// OLIVERCG: Set a cookie to 1 when logged for 1 hour
+        $cookieName = 'adm-tcdn';
+        $cookieValue = '1';
+        $cookieTime = time() + 3600;
+
+        setcookie($cookieName, $cookieValue, $cookieTime, '/');
+    }
 
 	public function hookActionDispatcherAfter($params){
 		$controller = Tools::getValue('controller');
