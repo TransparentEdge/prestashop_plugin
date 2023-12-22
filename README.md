@@ -17,7 +17,7 @@ mkdir -p ./modules/transparentedge
 2. Clone repository to created folder
 
 ```bash
-git clone git@github.com:NUTechnolgyInc/Transparent_Prestashop.git ./modules/transparentedge
+git clone git@github.com:TransparentEdge/prestashop_plugin ./modules/transparentedge
 ```
 
 3. Install Prestashop module
@@ -38,7 +38,7 @@ composer dumpautoload -d ./modules/transparentedge
 php bin/console cache:clear
 ```
 
-Also, you can install it manually by downloading the latest release on https://github.com/NUTechnolgyInc/Transparent_Prestashop/releases and uploading it through the Module manager page of your Backoffice.
+Also, you can install it manually by downloading the latest release on https://github.com/TransparentEdge/prestashop_plugin/releases and uploading it through the Module manager page of your Backoffice.
 
 ## Requirements
 
